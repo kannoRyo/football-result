@@ -27,7 +27,7 @@ export const fetchMatches = async () => {
     const resJson_2 = await res_2.json()
 
     const fetchMatches = resJson_2.matches.filter((match: any) => {
-        return ( match.utcDate < today )       
+        return ( match.utcDate < today && match.competition.name === "Primera Division" )       
     })
 
     return fetchMatches.slice(-5)

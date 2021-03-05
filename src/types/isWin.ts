@@ -1,0 +1,1 @@
+export type isWin = "WIN" | "DRAW" | "LOSE"

@@ -1,5 +1,6 @@
+export {default as EnemyLogo} from './EnemyLogo'
 export {default as GameResults} from './GameResults'
-export {default as GameResult} from './GameResult'
+export {default as ResultCard} from './ResultCard'
 export {default as Header} from './Header'
-export {default as ResultScore} from './ResultScore'
+export {default as Score} from './Score'
 export {default as Spacer} from './Spacer'
