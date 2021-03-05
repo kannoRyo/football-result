@@ -1,7 +1,7 @@
 import { calcIsWinner } from "../utils/calcIsWinner"
 import { fetchEnemyLogo } from "./fetchEnemyLogo"
 
-export const fetchResults = async (matches: any, teamName: any) => {
+export const fetchResults = async (matches: any, teamName: any, nextMatchId: number) => {
     const scores = matches.map((match: any)=>{
         return match.score
     })
@@ -20,13 +20,13 @@ export const fetchResults = async (matches: any, teamName: any) => {
         return enemy.name
     })
 
-    const enemyUrls = await fetchEnemyLogo(enemyTeamsId)
+    const {enemyUrls, nextTeam} = await fetchEnemyLogo(enemyTeamsId, nextMatchId)
 
     const isWins = scores.map((score: any, i: number) => {
         return calcIsWinner(teamName, score.winner, homeTeamName[i])
     })
 
-    return isWins.map((isWin: string, i: number) => {
+    const results = isWins.map((isWin: string, i: number) => {
         return {
             isWin: isWin,
             score: scores[i].fullTime,
@@ -34,4 +34,9 @@ export const fetchResults = async (matches: any, teamName: any) => {
             enemyName: enemyTeamsName[i]
         }
     })
+
+    return {
+        results: results,
+        nextTeamUrl: nextTeam.crestUrl
+    }
 }

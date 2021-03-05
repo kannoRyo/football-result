@@ -10,21 +10,21 @@ p{
 
 .c-box{
     position: absolute;
-    width: 410px;
+    width: 417px;
     height: 680px;
     box-sizing: border-box;
     border: 1px solid rgba(229, 231, 235, var(--tw-bg-opacity));
     
     top:50%;
     left:50%;
-    transform: translate(-50%, -52%);
+    transform: translate(-50%, -56%);
 }
 
 .header{
-    height: 62px;
+    height: 55px;
     width: 100%;
     /* background-color: #007bff; */
     color: #fff;
     font-family: 'Roboto', sans-serif;
-    line-height: 62px;
+    line-height: 55px;
 }
