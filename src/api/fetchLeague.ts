@@ -1,4 +1,4 @@
-const BASE_URL = "http://api.football-data.org/v2"
+const BASE_URL = "https://api.football-data.org/v2"
 
 const headers = new Headers()
 if(typeof process.env.REACT_APP_TOKEN === "string"){
