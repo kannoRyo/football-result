@@ -5,7 +5,7 @@ import { fetchLeague } from './api/fetchLeague';
 import { fetchMatches } from './api/fetchMatches';
 import { fetchResults } from './api/fetchResults';
 
-import { Header, GameResults, Spacer, NextMatchCard, LeaguePosition } from './components/index'
+import { Header, GameResults, Spacer, NextMatchCard, LeaguePosition, LeagueData } from './components/index'
 import { isWin } from './types/isWin';
 
 type Results = {
@@ -26,13 +26,16 @@ const App = () => {
   const [league, setLeague] = useState<any>()
   const [teamName, setTeamName] = useState("FC Barcelona")
   const [nextMatch, setNextMact] = useState<any>()
+  const [teamUrl, setTeamUrl] = useState<string>("")
 
   useEffect(() => {
       ( async ()=>{
-          const {matches, nextMatch} = await fetchMatches()    
+          const {matches, nextMatch, teamUrl} = await fetchMatches()    
           const nextMatchId =  (nextMatch.homeTeam.name!== teamName) ? nextMatch.homeTeam.id : nextMatch.awayTeam.id
           const {results, nextTeamUrl} = await fetchResults(matches, teamName, nextMatchId)
           const league =  await fetchLeague(teamName)
+
+          console.log(teamUrl)
 
           setLeague(league)
           setResults(results)
@@ -40,15 +43,16 @@ const App = () => {
             nextMatch: nextMatch,
             nextTeamUrl: nextTeamUrl
           })
+          setTeamUrl(teamUrl)
       })()
   },[])
 
-  const { position, playedGames} = (league) ? league : ""
+  const { position, playedGames, } = (league) ? league : ""
 
   return (
     <div className="c-section"> 
       <div className="c-box bg-gray-50">
-        <Header />
+        <Header teamUrl={teamUrl} />
         <Spacer
           size={"medium"}
         />
@@ -66,6 +70,12 @@ const App = () => {
               />
           </div>
         </div>
+        <Spacer
+            size={"medium"}
+        />
+        <LeagueData
+          league={league}
+        />
         <Spacer
             size={"medium"}
         />

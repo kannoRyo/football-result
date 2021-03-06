@@ -18,6 +18,8 @@ export const fetchMatches = async () => {
     const [team] = resJson.teams.filter((team: any) => team.name ===  "FC Barcelona") 
 
     const teamId = team.id
+    const teamUrl = team.crestUrl
+    console.log(teamUrl)
 
     const res_2 = await fetch(`${BASE_URL}/teams/${teamId}/matches`,{
         method: "GET" ,
@@ -25,6 +27,7 @@ export const fetchMatches = async () => {
     })
 
     const resJson_2 = await res_2.json()
+    
 
     const fetchMatches = resJson_2.matches.filter((match: any) => {
         return ( match.utcDate < today && match.competition.name === "Primera Division" )       
@@ -38,6 +41,7 @@ export const fetchMatches = async () => {
 
     return {
         matches: fetchMatches.slice(-5),
-        nextMatch: fetchNextMatch
+        nextMatch: fetchNextMatch,
+        teamUrl: teamUrl
     }
 }

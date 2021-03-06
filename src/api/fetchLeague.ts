@@ -15,15 +15,21 @@ export const fetchLeague = async(teamName: string) => {
 
     const position = team.position
     const playedGames = team.playedGames
+    const points = team.points
     const won = team.won
     const draw = team.draw
     const lost = team.lost
+    const goalsFor = team.goalsFor
+    const goalsAgainst = team.goalsAgainst
 
     return {
         position: position,
         playedGames: playedGames,
+        points: points,
         won: won,
         draw: draw,
         lost: lost,
+        goalsFor: goalsFor,
+        goalsAgainst: goalsAgainst
     }
 }
