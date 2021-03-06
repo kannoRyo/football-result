@@ -24,6 +24,6 @@ export const fetchLeague = async(teamName: string) => {
         playedGames: playedGames,
         won: won,
         draw: draw,
-        lost: lost
+        lost: lost,
     }
 }

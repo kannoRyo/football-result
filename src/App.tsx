@@ -5,7 +5,7 @@ import { fetchLeague } from './api/fetchLeague';
 import { fetchMatches } from './api/fetchMatches';
 import { fetchResults } from './api/fetchResults';
 
-import { Header, GameResults, Spacer, NextMatchCard } from './components/index'
+import { Header, GameResults, Spacer, NextMatchCard, LeaguePosition } from './components/index'
 import { isWin } from './types/isWin';
 
 type Results = {
@@ -43,6 +43,8 @@ const App = () => {
       })()
   },[])
 
+  const { position, playedGames} = (league) ? league : ""
+
   return (
     <div className="c-section"> 
       <div className="c-box bg-gray-50">
@@ -58,7 +60,10 @@ const App = () => {
               />
           </div>
           <div className="bg-gray-50 text-gray-700 border border-gray-300  font-semibold w-2/5 mx-auto rounded-lg h-36">
-              <p>s</p>
+              <LeaguePosition
+                position={position}
+                playedGames={playedGames}
+              />
           </div>
         </div>
         <Spacer

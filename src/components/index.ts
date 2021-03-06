@@ -1,6 +1,7 @@
 export {default as EnemyLogo} from './EnemyLogo'
 export {default as GameResults} from './GameResults'
 export {default as Header} from './Header'
+export {default as LeaguePosition} from './LeaguePosition'
 export {default as NextMatchCard} from './NextMatchCard'
 export {default as ResultCard} from './ResultCard'
 export {default as Score} from './Score'
