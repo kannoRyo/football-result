@@ -7,6 +7,8 @@ import { fetchResults } from './api/fetchResults';
 
 import { Header, GameResults, Spacer, NextMatchCard, LeaguePosition, LeagueData } from './components/index'
 import { isWin } from './types/isWin';
+import dayjs from 'dayjs';
+import { daysArray } from './utils/daysArray';
 
 type Results = {
   results:{
@@ -25,7 +27,8 @@ const App = () => {
   const [results, setResults] = useState<Results| undefined>()
   const [league, setLeague] = useState<any>()
   const [teamName, setTeamName] = useState("FC Barcelona")
-  const [nextMatch, setNextMact] = useState<any>()
+  const [nextMatch, setNextMatch] = useState<any>()
+  const [nextMatchUrl, setNextMatchUrl] = useState<any>()
   const [teamUrl, setTeamUrl] = useState<string>("")
 
   useEffect(() => {
@@ -35,17 +38,18 @@ const App = () => {
           const {results, nextTeamUrl} = await fetchResults(matches, teamName, nextMatchId)
           const league =  await fetchLeague(teamName)
 
-          console.log(teamUrl)
-
           setLeague(league)
           setResults(results)
-          setNextMact({
-            nextMatch: nextMatch,
-            nextTeamUrl: nextTeamUrl
+          setNextMatch({
+            enemyTeam: (nextMatch.homeTeam.name!== teamName) ? nextMatch.homeTeam.name : nextMatch.awayTeam.name ,
+            matchTime: dayjs(nextMatch.utcDate).format("HH:mm"),
+            matchDate: dayjs(nextMatch.utcDate).format("MM/DD"),
+            matchDay: daysArray[dayjs(nextMatch.utcDate).day()]
           })
+          setNextMatchUrl(nextTeamUrl)
           setTeamUrl(teamUrl)
       })()
-  },[])
+  },[teamName])
 
   const { position, playedGames, } = (league) ? league : ""
 
@@ -60,7 +64,8 @@ const App = () => {
           <div className="bg-gray-50 text-gray-700 border border-gray-300  font-semibold w-3/5 mx-auto rounded-lg h-36">
               <NextMatchCard
                 nextMatch={nextMatch}   
-                teamName={teamName}       
+                teamName={teamName}      
+                nextMatchUrl={nextMatchUrl} 
               />
           </div>
           <div className="bg-gray-50 text-gray-700 border border-gray-300  font-semibold w-2/5 mx-auto rounded-lg h-36">

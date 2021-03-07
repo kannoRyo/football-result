@@ -19,7 +19,6 @@ export const fetchMatches = async () => {
 
     const teamId = team.id
     const teamUrl = team.crestUrl
-    console.log(teamUrl)
 
     const res_2 = await fetch(`${BASE_URL}/teams/${teamId}/matches`,{
         method: "GET" ,

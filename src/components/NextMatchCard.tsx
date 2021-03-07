@@ -3,20 +3,12 @@ import dayjs from 'dayjs'
 import { daysArray } from '../utils/daysArray'
 
 type Props = {
-    nextMatch: {
-        nextMatch: any,
-        nextTeamUrl: string
-    },
+    nextMatch: any,
+    nextMatchUrl: string
     teamName: string
 }
 
-const NextMatchCard = ({nextMatch, teamName}: Props)=>{
-    const enemyName = nextMatch ? (nextMatch.nextMatch.homeTeam.name!== teamName) ? nextMatch.nextMatch.homeTeam.name : nextMatch.nextMatch.awayTeam : ""
-    const matchTime = nextMatch ? dayjs(nextMatch.nextMatch.utcDate).format("HH:mm") : ""
-    const matchDate =  nextMatch ? dayjs(nextMatch.nextMatch.utcDate).format("MM/DD") : ""
-    const matchDay =  nextMatch ? daysArray[dayjs(nextMatch.nextMatch.utcDate).day()] : ""
-
-    console.log(matchTime)
+const NextMatchCard = ({nextMatch, teamName, nextMatchUrl}: Props)=>{
 
 	return (
     <div>
@@ -25,12 +17,12 @@ const NextMatchCard = ({nextMatch, teamName}: Props)=>{
             nextMatch ? (
                 <div className="flex px-4 w-full">
                     <div className="w-1/3">
-                        <img src={nextMatch.nextTeamUrl} alt="" height="80" width="80" className="py-3" />
+                        <img src={nextMatchUrl} alt="" height="80" width="80" className="py-3" />
                     </div>
                     <div className="w-2/3 pl-5">
-                        <p>{enemyName}</p>
-                        <p>{matchDate}({matchDay})</p>
-                        <p>{matchTime}</p>
+                        <p>{nextMatch.enemyTeam}</p>
+                        <p>{nextMatch.matchDate}({nextMatch.matchDay})</p>
+                        <p>{nextMatch.matchTime}</p>
                     </div>
                 </div>
             ) : (

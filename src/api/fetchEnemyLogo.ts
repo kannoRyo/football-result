@@ -1,3 +1,5 @@
+import { isTemplateMiddleOrTemplateTail } from "typescript"
+
 const BASE_URL = "https://api.football-data.org/v2"
 
 const headers = new Headers()
@@ -12,7 +14,13 @@ export const fetchEnemyLogo = async(ids: number[], nextMatchId: number) => {
     })
 
     const resJson = await res.json()
-    const teams = resJson.teams.filter((team: any) => ids.includes(team.id) )
+    // const teams = resJson.teams.filter((team: any) => ids.includes(team.id) )
+
+    const teams = ids.map((id) => {
+        const team =  resJson.teams.filter((team: any) => team.id === id)
+        return team[0]
+    })
+
     const [nextTeam] = resJson.teams.filter((team: any) => team.id === nextMatchId)
     const logoUrl = teams.map((team: any) => team.crestUrl)
 
