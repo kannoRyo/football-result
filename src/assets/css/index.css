@@ -15,3 +15,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.ais-Hits-list  {
+  padding: 0;
+  list-style: none;
+}

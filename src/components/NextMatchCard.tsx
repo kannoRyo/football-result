@@ -15,7 +15,7 @@ const NextMatchCard = ({nextMatch, teamName, nextMatchUrl}: Props)=>{
         <p className="p-3">次の試合</p>
         {
             nextMatch ? (
-                <div className="flex px-4 w-full">
+                <div className="flex pl-4 px-1 w-full">
                     <div className="w-1/3">
                         <img src={nextMatchUrl} alt="" height="80" width="80" className="py-3" />
                     </div>

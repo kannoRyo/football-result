@@ -8,14 +8,19 @@ if(typeof process.env.REACT_APP_TOKEN === "string"){
 
 const today = dayjs().format("YYYY-MM-DD")
 
-export const fetchMatches = async () => {
+//　チーム名
+const TEAM_NAME = "Real Madrid CF"
+
+export const fetchMatches = async (teamName: string) => {
     const res =  await fetch(`${BASE_URL}/teams/?areas=2224`, {
         method: "GET",
         headers: headers
     })
 
     const resJson =  await res.json()
-    const [team] = resJson.teams.filter((team: any) => team.name ===  "FC Barcelona") 
+    const [team] = resJson.teams.filter((team: any) => team.name ===  teamName ) 
+
+    console.log(team)
 
     const teamId = team.id
     const teamUrl = team.crestUrl

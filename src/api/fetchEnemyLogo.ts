@@ -1,5 +1,3 @@
-import { isTemplateMiddleOrTemplateTail } from "typescript"
-
 const BASE_URL = "https://api.football-data.org/v2"
 
 const headers = new Headers()
