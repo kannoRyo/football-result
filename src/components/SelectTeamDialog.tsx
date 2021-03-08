@@ -17,7 +17,6 @@ const SelectTeamDialog = ({open, handleClose, handleTeamName}: Props)=>{
 	)
 	return (
         <Dialog open={open} onClose={handleClose} >
-            <DialogTitle>タイトル</DialogTitle>
             <InstantSearch
             indexName="LaLiga"
             searchClient={searchClient}

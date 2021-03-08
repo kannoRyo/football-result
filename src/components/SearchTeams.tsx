@@ -10,8 +10,8 @@ const SearchTeams = ({handleTeamName}: Props)=>{
 	
 	const Hit = ({hit}: any) => {
 		return (
-			<div className="pl-5">
-				<button onClick={()=> handleTeamName(hit.teamName)} >
+			<div className="w-70">
+				<button className="w-60 mx-10 py-3 rounded-xl bg-gray-200 hover:bg-blue-500 text-gray-700 hover:text-white font-extrabold cursor-pointer" style={{border: "1px solid #ccc"}} onClick={()=> handleTeamName(hit.teamName)} >
 					{hit.teamName}
 				</button>
 			</div>
@@ -20,7 +20,9 @@ const SearchTeams = ({handleTeamName}: Props)=>{
 
 	return (
 	<>
-		<SearchBox translations={{placeholder: "Search for Teams"}} defaultRefinement={"Search"}  />
+		<div className="mx-auto mt-3">
+			<SearchBox translations={{placeholder: "Search for Teams"}} defaultRefinement={"Search"}  />
+		</div>
 		<div  className="list-none">
 			<Hits hitComponent={Hit}/>
 		</div>
