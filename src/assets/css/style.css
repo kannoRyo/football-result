@@ -29,7 +29,21 @@ p{
     line-height: 55px;
 }
 
-body { font-family: sans-serif; padding: 1em; }
+.square-parallel-center{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -56%);    
+}
+
+.loading{
+    position: absolute;
+    top:38%;
+    left:50%;
+    transform: translate(-50%, -46%);    
+}
+
+body { font-family: sans-serif;}
 .ais-ClearRefinements { margin: 1em 0; }
 .ais-SearchBox { margin: 1em 0; }
 .ais-Pagination { margin-top: 1em; }

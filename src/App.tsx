@@ -5,7 +5,7 @@ import { fetchLeague } from './api/fetchLeague';
 import { fetchMatches } from './api/fetchMatches';
 import { fetchResults } from './api/fetchResults';
 
-import { Header, GameResults, Spacer, NextMatchCard, LeaguePosition, LeagueData, SearchTeams, SelectTeamDialog } from './components/index'
+import { Header, GameResults, Spacer, NextMatchCard, LeaguePosition, LeagueData, SearchTeams, SelectTeamDialog, Loader } from './components/index'
 import { isWin } from './types/isWin';
 import dayjs from 'dayjs';
 import { daysArray } from './utils/daysArray';
@@ -40,89 +40,98 @@ const App = () => {
   const [nextMatchUrl, setNextMatchUrl] = useState<any>()
   const [teamUrl, setTeamUrl] = useState<string>("")
   const [open, setOpen]=useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   const handleTeamName = (team: string) => {
     setTeamName(team)
     setOpen(false)
   }
-
+  
   const handleClose = () => {
     setOpen(false)
   }
-
+  
   const handleOpen = () => {
     setOpen(true)
   }
+  
+  const { position, playedGames, } = (league) ? league : ""
 
   useEffect(() => {
     ( async ()=>{
-      const {matches, nextMatch, teamUrl} = await fetchMatches(teamName)    
-      const nextMatchId =  (nextMatch.homeTeam.name!== teamName) ? nextMatch.homeTeam.id : nextMatch.awayTeam.id
-      const {results, nextTeamUrl} = await fetchResults(matches, teamName, nextMatchId)
-      const league =  await fetchLeague(teamName)
-    
-          setLeague(league)
-          setResults(results)
-          setNextMatch({
-            enemyTeam: (nextMatch.homeTeam.name!== teamName) ? nextMatch.homeTeam.name : nextMatch.awayTeam.name ,
-            matchTime: dayjs(nextMatch.utcDate).format("HH:mm"),
-            matchDate: dayjs(nextMatch.utcDate).format("MM/DD"),
-            matchDay: daysArray[dayjs(nextMatch.utcDate).day()]
-          })
-          setNextMatchUrl(nextTeamUrl)
-          setTeamUrl(teamUrl)
+        setIsLoading(true)
+        const {matches, nextMatch, teamUrl} = await fetchMatches(teamName)    
+        const nextMatchId =  (nextMatch.homeTeam.name!== teamName) ? nextMatch.homeTeam.id : nextMatch.awayTeam.id
+        const {results, nextTeamUrl} = await fetchResults(matches, teamName, nextMatchId)
+        const league =  await fetchLeague(teamName)
+  
+        setLeague(league)
+        setResults(results)
+        setNextMatch({
+          enemyTeam: (nextMatch.homeTeam.name!== teamName) ? nextMatch.homeTeam.name : nextMatch.awayTeam.name ,
+          matchTime: dayjs(nextMatch.utcDate).format("HH:mm"),
+          matchDate: dayjs(nextMatch.utcDate).format("MM/DD"),
+          matchDay: daysArray[dayjs(nextMatch.utcDate).day()]
+        })
+        setNextMatchUrl(nextTeamUrl)
+        setTeamUrl(teamUrl)
+        setIsLoading(false)
       })()
   },[teamName])
 
-  console.log(open)
-
-  const { position, playedGames, } = (league) ? league : ""
-
   return (
-    <div className="c-section"> 
-      <div className="c-box bg-gray-50">
-        <Header 
-          teamUrl={teamUrl} 
-          handleTeamName={handleTeamName} 
-          handleOpen={handleOpen}
-        />
-        <Spacer
-          size={"large"}
-        />
-        <div className="flex w-11/12 mx-auto">
-          <div className="bg-gray-50 text-gray-700 border border-gray-300  font-semibold w-3/5 mx-auto rounded-lg h-36 mr-2" >
-              <NextMatchCard
-                nextMatch={nextMatch}   
-                teamName={teamName}      
-                nextMatchUrl={nextMatchUrl} 
-              />
+    <>
+    {
+      (isLoading) ? (
+        <Loader />
+      ) : (
+        <div className="c-section"> 
+          <div className="c-box bg-gray-50">
+            <Header 
+              teamUrl={teamUrl} 
+              handleTeamName={handleTeamName} 
+              handleOpen={handleOpen}
+            />
+            <Spacer
+              size={"large"}
+            />
+            <div className="flex w-11/12 mx-auto">
+              <div className="bg-gray-50 text-gray-700 border border-gray-300  font-semibold w-3/5 mx-auto rounded-lg h-36 mr-2" >
+                  <NextMatchCard
+                    nextMatch={nextMatch}   
+                    teamName={teamName}      
+                    nextMatchUrl={nextMatchUrl} 
+                  />
+              </div>
+              <div className="bg-gray-50 text-gray-700 border border-gray-300  font-semibold w-2/5 mx-auto rounded-lg h-36">
+                  <LeaguePosition
+                    position={position}
+                    playedGames={playedGames}
+                  />
+              </div>
+            </div>
+            <Spacer
+                size={"medium"}
+            />
+            <LeagueData
+              league={league}
+            />
+            <Spacer
+                size={"medium"}
+            />
+            <GameResults 
+              results={results}
+            />
           </div>
-          <div className="bg-gray-50 text-gray-700 border border-gray-300  font-semibold w-2/5 mx-auto rounded-lg h-36">
-              <LeaguePosition
-                position={position}
-                playedGames={playedGames}
-              />
-          </div>
-        </div>
-        <Spacer
-            size={"medium"}
-        />
-        <LeagueData
-          league={league}
-        />
-        <Spacer
-            size={"medium"}
-        />
-        <GameResults 
-          results={results}
-        />
-      </div>
-      <SelectTeamDialog 
-        open={open}
-        handleClose={handleClose}
-        handleTeamName={handleTeamName}
-      />
-    </div>
+          <SelectTeamDialog 
+            open={open}
+            handleClose={handleClose}
+            handleTeamName={handleTeamName}
+          />
+        </div> 
+      )
+    }
+    </>
   );
 }
 
