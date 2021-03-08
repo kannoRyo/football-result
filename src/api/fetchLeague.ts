@@ -5,8 +5,8 @@ if(typeof process.env.REACT_APP_TOKEN === "string"){
     headers.set('X-Auth-Token' , process.env.REACT_APP_TOKEN)
 }
 
-export const fetchLeague = async(teamName: string) => {
-    const res = await fetch(`${BASE_URL}/competitions/2014/standings`,{
+export const fetchLeague = async(teamName: string, competitionId: number) => {
+    const res = await fetch(`${BASE_URL}/competitions/${competitionId}/standings`,{
         method: "GET",
         headers: headers
     })

@@ -11,8 +11,8 @@ const today = dayjs().format("YYYY-MM-DD")
 //　チーム名
 const TEAM_NAME = "Real Madrid CF"
 
-export const fetchMatches = async (teamName: string) => {
-    const res =  await fetch(`${BASE_URL}/teams/?areas=2224`, {
+export const fetchMatches = async (teamName: string, areaId: number, leagueName: string) => {
+    const res =  await fetch(`${BASE_URL}/teams/?areas=${areaId}`, {
         method: "GET",
         headers: headers
     })
@@ -34,11 +34,11 @@ export const fetchMatches = async (teamName: string) => {
     
 
     const fetchMatches = resJson_2.matches.filter((match: any) => {
-        return ( match.utcDate < today && match.competition.name === "Primera Division" )       
+        return ( match.utcDate < today && match.competition.name === leagueName )       
     })
 
     const fetchNextMatches = resJson_2.matches.filter((match: any) => {
-        return ( match.utcDate >= today && match.competition.name === "Primera Division" )       
+        return ( match.utcDate >= today && match.competition.name === leagueName )       
     })
 
     const fetchNextMatch = fetchNextMatches[0]

@@ -14,8 +14,8 @@ const LeaguePosition = ({position, playedGames}: Props)=>{
         {
             position ? (
                 <div>
-                    <div className="pl-11">
-                        <h2 className="m-0" ><span className="text-6xl pr-2" >{position}</span>位</h2>
+                    <div className="pl-9">
+                        <h2 className="m-0" ><span className="text-5xl pr-2" >{position}</span>位</h2>
                     </div>
                     <p className="text-sm text-center py-1" >({playedGames}節時点)</p>
                 </div>

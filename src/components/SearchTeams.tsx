@@ -20,8 +20,8 @@ const SearchTeams = ({handleTeamName}: Props)=>{
 
 	return (
 	<>
-		<div className="mx-auto mt-3">
-			<SearchBox translations={{placeholder: "Search for Teams"}} defaultRefinement={"Search"}  />
+		<div className="mx-5 mt-4  ">
+			<SearchBox translations={{placeholder: "Search for Teams"}}  autoFocus={true} />
 		</div>
 		<div  className="list-none">
 			<Hits hitComponent={Hit}/>

@@ -9,12 +9,10 @@ import { Header, GameResults, Spacer, NextMatchCard, LeaguePosition, LeagueData,
 import { isWin } from './types/isWin';
 import dayjs from 'dayjs';
 import { daysArray } from './utils/daysArray';
-
+import {leagueNameArr} from './utils/leagueNameArr'
+import {leagueObject} from './utils/leagueObject'
 import algoliasearch from 'algoliasearch/lite';
-
 import { InstantSearch } from 'react-instantsearch-dom';
-
-
 
 //　チーム名
 const TEAM_NAME = "Club Atlético de Madrid"
@@ -32,6 +30,8 @@ type Results = {
   }[]
 }
 
+type LEAGUE = "Primera Division" | "Bundesliga" | "Premier League" | "Serie A"
+
 const App = () => {
   const [results, setResults] = useState<Results| undefined>()
   const [league, setLeague] = useState<any>()
@@ -41,6 +41,8 @@ const App = () => {
   const [teamUrl, setTeamUrl] = useState<string>("")
   const [open, setOpen]=useState<boolean>(false)
   const [isLoading, setIsLoading] = useState(true)
+  // const [areaId, setAreaId] = useState()
+  const [leagueName, setLeagueName] = useState<LEAGUE>("Primera Division")
 
   const handleTeamName = (team: string) => {
     setTeamName(team)
@@ -54,16 +56,22 @@ const App = () => {
   const handleOpen = () => {
     setOpen(true)
   }
+
+  const handleLeague = (e:  React.ChangeEvent<{name?: string | undefined; value: unknown;}>) => {
+    const league:any = e.target.value
+    setLeagueName(league)
+  }
   
   const { position, playedGames, } = (league) ? league : ""
 
   useEffect(() => {
     ( async ()=>{
         setIsLoading(true)
-        const {matches, nextMatch, teamUrl} = await fetchMatches(teamName)    
+        const leagueOb = leagueObject[leagueName] 
+        const {matches, nextMatch, teamUrl} = await fetchMatches(teamName, leagueOb.area, leagueName)    
         const nextMatchId =  (nextMatch.homeTeam.name!== teamName) ? nextMatch.homeTeam.id : nextMatch.awayTeam.id
         const {results, nextTeamUrl} = await fetchResults(matches, teamName, nextMatchId)
-        const league =  await fetchLeague(teamName)
+        const league =  await fetchLeague(teamName, leagueOb.competition)
   
         setLeague(league)
         setResults(results)
@@ -77,6 +85,7 @@ const App = () => {
         setTeamUrl(teamUrl)
         setIsLoading(false)
       })()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[teamName])
 
   return (
@@ -88,8 +97,8 @@ const App = () => {
         <div className="c-section"> 
           <div className="c-box bg-gray-50">
             <Header 
+              teamName={teamName}
               teamUrl={teamUrl} 
-              handleTeamName={handleTeamName} 
               handleOpen={handleOpen}
             />
             <Spacer
@@ -127,6 +136,9 @@ const App = () => {
             open={open}
             handleClose={handleClose}
             handleTeamName={handleTeamName}
+            leagueNameArr={leagueNameArr}
+            leagueName={leagueName}
+            handleLeague={handleLeague}
           />
         </div> 
       )
@@ -136,3 +148,5 @@ const App = () => {
 }
 
 export default App;
+
+

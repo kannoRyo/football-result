@@ -1,0 +1,1 @@
+export const leagueNameArr = ["Primera Division", "Premier League", "Bundesliga", "Serie A"]
