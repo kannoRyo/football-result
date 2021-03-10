@@ -1,10 +1,10 @@
 import React from 'react'
-import {isWin} from '../types/isWin'
+import {IsWin} from '../types/IsWin'
 import {Spacer} from './index'
 
 type Props = {
     result:{
-        isWin: isWin,
+        isWin: IsWin,
         score:{
             homeTeam: number,
             awayTeam: number

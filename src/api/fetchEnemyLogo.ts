@@ -12,7 +12,6 @@ export const fetchEnemyLogo = async(ids: number[], nextMatchId: number) => {
     })
 
     const resJson = await res.json()
-    // const teams = resJson.teams.filter((team: any) => ids.includes(team.id) )
 
     const teams = ids.map((id) => {
         const team =  resJson.teams.filter((team: any) => team.id === id)

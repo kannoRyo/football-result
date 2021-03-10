@@ -80,5 +80,9 @@ input[type=”text”] {
 }
 
 .ais-Hits-list{
-    height: 400px;
+    height: 390px;
+}
+
+html,body{
+    overflow: hidden
 }

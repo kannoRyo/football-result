@@ -15,10 +15,12 @@ type Props = {
 
 const SelectTeamDialog = ({open, handleClose, handleTeamName, leagueNameArr, leagueName, handleLeague}: Props)=>{
     
+    // algolia設定
     const searchClient = algoliasearch(
 		String(process.env.REACT_APP_ALGOLIA_ID),
 		String(process.env.REACT_APP_ALGOLIA_KEY)
-	)
+    )
+    
 	return (
         <Dialog open={open} onClose={handleClose} >
             <div>
@@ -29,11 +31,16 @@ const SelectTeamDialog = ({open, handleClose, handleTeamName, leagueNameArr, lea
                         fullWidth={true}
                     >
                         {
-                            leagueNameArr.map((league: any) => (
-                                <MenuItem value={league} >{league}</MenuItem>
+                            leagueNameArr.map((league: any, i: number) => (
+                                <MenuItem value={league} key={i.toString()} >{league}</MenuItem>
                             ))
                         }
                     </Select>
+                    {
+                        (leagueName === "Primera Division") && (
+                            <p　className="pt-2"　>＊日本語検索可</p>
+                        )
+                    }
                 </div>
                 <InstantSearch
                     indexName={leagueName}

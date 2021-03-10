@@ -1,10 +1,10 @@
 import React from 'react'
 import {Score, EnemyLogo, Spacer } from './index'
-import {isWin} from '../types/isWin'
+import {IsWin} from '../types/IsWin'
 
 type Props = {
     result:{
-        isWin: isWin,
+        isWin: IsWin,
         score:{
             homeTeam: number,
             awayTeam: number
@@ -21,7 +21,6 @@ const GameResult = ({result}: Props)=>{
             <div>
                 <Score result={result} />
                 <EnemyLogo logo={result.enemyUrl} name={result.enemyName} />
-
                 <Spacer size={"small"} />
             </div>
         </>

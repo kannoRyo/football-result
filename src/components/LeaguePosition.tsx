@@ -1,5 +1,4 @@
 import React from 'react'
-import {Spacer} from './index'
 
 type Props = {
     position: number,

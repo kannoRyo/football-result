@@ -20,8 +20,6 @@ export const fetchResults = async (matches: any, teamName: any, nextMatchId: num
         return enemy.name
     })
 
-    console.log(enemyTeamsId)
-
     const {enemyUrls, nextTeam} = await fetchEnemyLogo(enemyTeamsId, nextMatchId)
 
     const isWins = scores.map((score: any, i: number) => {

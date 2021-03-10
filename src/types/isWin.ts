@@ -1,1 +1,1 @@
-export type isWin = "WIN" | "DRAW" | "LOSE"
+export type IsWin = "WIN" | "DRAW" | "LOSE"

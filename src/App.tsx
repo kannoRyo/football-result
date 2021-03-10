@@ -1,36 +1,28 @@
 import React, {useState, useEffect} from 'react';
+
+// css
 import './assets/css/App.css';
 import './assets/css/style.css'
+
+// fetch API
 import { fetchLeague } from './api/fetchLeague';
 import { fetchMatches } from './api/fetchMatches';
 import { fetchResults } from './api/fetchResults';
 
-import { Header, GameResults, Spacer, NextMatchCard, LeaguePosition, LeagueData, SearchTeams, SelectTeamDialog, Loader } from './components/index'
-import { isWin } from './types/isWin';
+
+import { Header, GameResults, Spacer, NextMatchCard, LeaguePosition, LeagueData, SelectTeamDialog, Loader } from './components/index'
+
+// types
+import { Results } from './types/Results'
+import { League } from './types/League'
+
 import dayjs from 'dayjs';
 import { daysArray } from './utils/daysArray';
 import {leagueNameArr} from './utils/leagueNameArr'
 import {leagueObject} from './utils/leagueObject'
-import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch } from 'react-instantsearch-dom';
 
 //　チーム名
-const TEAM_NAME = "Club Atlético de Madrid"
-
-type Results = {
-  results:{
-    isWin: isWin,
-    score:{
-      homeTeam: number,
-      awayTeam: number
-      
-    },
-    enemyUrl: string,
-    enemyName: string
-  }[]
-}
-
-type LEAGUE = "Primera Division" | "Bundesliga" | "Premier League" | "Serie A"
+const TEAM_NAME = "FC Barcelona"
 
 const App = () => {
   const [results, setResults] = useState<Results| undefined>()
@@ -40,9 +32,8 @@ const App = () => {
   const [nextMatchUrl, setNextMatchUrl] = useState<any>()
   const [teamUrl, setTeamUrl] = useState<string>("")
   const [open, setOpen]=useState<boolean>(false)
+  const [leagueName, setLeagueName] = useState<League>("Primera Division")
   const [isLoading, setIsLoading] = useState(true)
-  // const [areaId, setAreaId] = useState()
-  const [leagueName, setLeagueName] = useState<LEAGUE>("Primera Division")
 
   const handleTeamName = (team: string) => {
     setTeamName(team)
@@ -66,12 +57,17 @@ const App = () => {
 
   useEffect(() => {
     ( async ()=>{
+        document.addEventListener( "touchmove", (e: TouchEvent) => {
+          e.preventDefault()
+        }, {passive: false})
+
         setIsLoading(true)
-        const leagueOb = leagueObject[leagueName] 
-        const {matches, nextMatch, teamUrl} = await fetchMatches(teamName, leagueOb.area, leagueName)    
+        const selectedLeague = leagueObject[leagueName] 
+
+        const {matches, nextMatch, teamUrl} = await fetchMatches(teamName, selectedLeague.area, leagueName)    
         const nextMatchId =  (nextMatch.homeTeam.name!== teamName) ? nextMatch.homeTeam.id : nextMatch.awayTeam.id
         const {results, nextTeamUrl} = await fetchResults(matches, teamName, nextMatchId)
-        const league =  await fetchLeague(teamName, leagueOb.competition)
+        const league =  await fetchLeague(teamName, selectedLeague.competition)
   
         setLeague(league)
         setResults(results)
@@ -88,6 +84,7 @@ const App = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[teamName])
 
+  // fetch完了するまではLoad画面になる
   return (
     <>
     {
@@ -108,7 +105,6 @@ const App = () => {
               <div className="bg-gray-50 text-gray-700 border border-gray-300  font-semibold w-3/5 mx-auto rounded-lg h-36 mr-2" >
                   <NextMatchCard
                     nextMatch={nextMatch}   
-                    teamName={teamName}      
                     nextMatchUrl={nextMatchUrl} 
                   />
               </div>

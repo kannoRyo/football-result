@@ -1,7 +1,6 @@
 import React from 'react'
 import { SearchBox, Hits } from 'react-instantsearch/dom'
 
-
 type Props = {
 	handleTeamName: (team: string) => void
 }

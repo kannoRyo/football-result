@@ -1,14 +1,11 @@
 import React from 'react'
-import dayjs from 'dayjs'
-import { daysArray } from '../utils/daysArray'
 
 type Props = {
     nextMatch: any,
     nextMatchUrl: string
-    teamName: string
 }
 
-const NextMatchCard = ({nextMatch, teamName, nextMatchUrl}: Props)=>{
+const NextMatchCard = ({nextMatch, nextMatchUrl}: Props)=>{
 
 	return (
     <div>
