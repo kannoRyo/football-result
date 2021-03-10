@@ -22,8 +22,8 @@ const SelectTeamDialog = ({open, handleClose, handleTeamName, leagueNameArr, lea
     )
     
 	return (
-        <Dialog open={open} onClose={handleClose} >
-            <div>
+        <Dialog open={open} onClose={handleClose} style={{top: "-60px"}} >
+            <div> 
                 <div className="my-5 mx-8" >
                     <Select
                         value={leagueName}

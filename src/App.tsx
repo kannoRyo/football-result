@@ -128,14 +128,16 @@ const App = () => {
               results={results}
             />
           </div>
-          <SelectTeamDialog 
-            open={open}
-            handleClose={handleClose}
-            handleTeamName={handleTeamName}
-            leagueNameArr={leagueNameArr}
-            leagueName={leagueName}
-            handleLeague={handleLeague}
-          />
+          <div className="-top-16" >
+            <SelectTeamDialog 
+              open={open}
+              handleClose={handleClose}
+              handleTeamName={handleTeamName}
+              leagueNameArr={leagueNameArr}
+              leagueName={leagueName}
+              handleLeague={handleLeague}
+            />
+          </div>
         </div> 
       )
     }
